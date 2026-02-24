@@ -1,0 +1,8 @@
+apt-get install docker-engine docker-compose
+
+systemctl enable --now docker
+
+
+mkdir -p /opt/nginx && cd /opt/nginx
+  туда кидаем файлы докера
+docker compose up -d
