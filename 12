@@ -8,6 +8,7 @@ systemctl enable --now webmin
 curl -o webmin-setup-repo.sh https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repo.sh
 sudo sh webmin-setup-repo.sh
 
+iptables -A INPUT -p tcp --dport 10000 -j ACCEPT
 
 Шаг 2. Вход в панель управления (с клиента RED OS)
 Webmin работает через веб-браузер по защищенному протоколу на порту 10000.
