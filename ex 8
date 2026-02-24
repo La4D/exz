@@ -1,0 +1,11 @@
+mkdir -p /backup
+nano /usr/local/bin/backup.sh
+  #!/bin/bash
+  # Создаем архив персональной папки в директории /backup
+  tar -czf /backup/personal_backup_$(date +%F).tar.gz /srv/shares/personal
+chmod +x /usr/local/bin/backup.sh
+crontab -e
+0 12 * * 1 /usr/local/bin/backup.sh
+systemctl enable --now crond
+/usr/local/bin/backup.sh
+ls -l /backup
