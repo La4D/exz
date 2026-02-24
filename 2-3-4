@@ -1,0 +1,42 @@
+2------
+hostnamectl set-hostname dc.exz.net
+apt-get update
+apt-get install samba-dc 
+mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+SAMBA-TOOL DOMAIN PROVISION --REALM=EXZ.NET --DOMAIN=EXZ --ADMINPASS='P@SSW0RD123!' --SERVER-ROLE=DC --DNS-BACKEND=SAMBA_INTERNAL
+systemctl enable --now samba
+samba-tool group add AdminGroup
+samba-tool group add RegularGroup
+
+samba-tool user create adminuser P@ssw0rd123!
+samba-tool user create regularuser P@ssw0rd123!
+
+samba-tool group addmembers AdminGroup adminuser
+samba-tool group addmembers RegularGroup regularuser
+
+3--------
+
+samba-tool dns zonecreate 127.0.0.1 0.168.192.in-addr.arpa -U Administrator
+samba-tool dns add 127.0.0.1 exz.net client A 192.168.0.100 -U Administrator
+samba-tool dns add 127.0.0.1 0.168.192.in-addr.arpa 100 PTR client.exz.net -U Administrator
+
+4---------
+
+mkdir -p /srv/shares/public
+mkdir -p /srv/shares/personal
+
+chmod 777 /srv/shares/public
+chmod 7777 /srv/shares/personal
+[public]
+    path = /srv/shares/public
+    read only = no
+
+[personal]
+    path = /srv/shares/personal
+    read only = no
+    valid users = EXZ\reguser
+CLi----------
+
+hostnamectl set-hostname cli.exz.net
+dnf install sssd -y
+realm join exz.net -U Administrator
