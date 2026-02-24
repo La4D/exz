@@ -1,0 +1,15 @@
+dnf install node_exporter
+или 
+dnf install prometheus-node_exporter
+
+в браузере-----
+
+  http://192.168.0.1:3000 admin admin
+
+  Перейди в раздел Connections -> Data Sources -> Add data source и выбери Prometheus
+
+  В поле URL введи адрес сервера Prometheus: http://192.168.0.1:9090. Прокрути вниз и нажми Save & test. Если появится зеленая галочка — связь установлена!
+
+  Чтобы показать мониторинг клиента, перейди в браузере по адресу:
+
+  http://192.168.0.1:9090/targets
