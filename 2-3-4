@@ -3,7 +3,7 @@ hostnamectl set-hostname dc.exz.net
 apt-get update
 apt-get install samba-dc 
 mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
-SAMBA-TOOL DOMAIN PROVISION --REALM=EXZ.NET --DOMAIN=EXZ --ADMINPASS='P@SSW0RD123!' --SERVER-ROLE=DC --DNS-BACKEND=SAMBA_INTERNAL
+samba-tool domain provision --realm=EXZ.NET --domain=EXZ --adminpass='P@ssw0rd123!' --server-role=dc --dns-backend=SAMBA_INTERNAL
 systemctl enable --now samba
 samba-tool group add AdminGroup
 samba-tool group add RegularGroup
